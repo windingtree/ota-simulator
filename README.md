@@ -4,7 +4,7 @@ Simply returns a successful reservation number
 
 ## Installation
 * npm install
-* npm start
+* now dev
 
 ## usage
-`curl -X POST http://localhost:8080/reservation -d "<resa>"`
+`curl -X POST http://localhost:port/api -d "<resa>"`
