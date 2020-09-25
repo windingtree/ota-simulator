@@ -1,0 +1,22 @@
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+    <SOAP-ENV:Body>
+        <OTA_HotelResNotifRS EchoToken="1d6b8284-e390-4151-bc76-b35e21e20269" ResResponseType="Cancelled"
+                             TimeStamp="2020-09-25T05:35:46Z" Version="2.000"
+                             xmlns="http://www.opentravel.org/OTA/2003/05"
+                             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                             xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05 OTA_HotelResNotifRQ.xsd">
+            <Success/>
+            <HotelReservations>
+                <HotelReservation>
+                    <UniqueID Type="14" ID="WTTest123Billing"/>
+                    <ResGlobalInfo>
+                        <HotelReservationIDs>
+                            <HotelReservationID ResID_Type="22" ResID_Source="RT" ResID_SourceContext="RTConfirmNumber"
+                                                ResID_Value="64478864"/>
+                        </HotelReservationIDs>
+                    </ResGlobalInfo>
+                </HotelReservation>
+            </HotelReservations>
+        </OTA_HotelResNotifRS>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

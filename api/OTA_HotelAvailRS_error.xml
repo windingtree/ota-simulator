@@ -1,0 +1,9 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+    <soap:Body>
+        <OTA_HotelAvailRS xmlns="http://www.opentravel.org/OTA/2003/05" Version="1.0" TimeStamp="2020-09-25T11:40:13.783-04:00" EchoToken="TestPullWT1234">
+            <Errors>
+                <Error Code="175" ShortText="Wrong Access Information" Type="4"/>
+            </Errors>
+        </OTA_HotelAvailRS>
+    </soap:Body>
+</soap:Envelope>
