@@ -1,45 +1,39 @@
-var fs = require('fs');
-var path = require('path');
-const url = require('url');
+const fs = require('fs');
+const path = require('path');
+const util = require('util');
+const RESPONSES_FOLDER = path.join(__dirname, 'responses');
 
-const responses = {
-    'getOTAHotelRes': path.join(__dirname, 'OTA_HotelResNotifRS-Commit.xml'),
-    'cancel': path.join(__dirname, 'OTA_HotelResNotifRS-Cancel.xml'),
-    'getOTAHotelAvailability': path.join(__dirname, 'OTA_HotelAvailRS.xml')
+const fsReadDirAsync=util.promisify(fs.readdir);
+const fsStatAsync=util.promisify(fs.stat);
+const fsReadFileAsync=util.promisify(fs.readFile);
+
+module.exports = async (req, res) => {
+    let {query:{ota}} = req;
+    if (!ota || !await fileExists(ota)) {
+        let files = await getAvailableFiles();
+        res.send(`File "${ota}" does not exist. \nAvailable files:\n${files.join('\n')}`);
+        return;
+    }
+    let filePath = path.join(RESPONSES_FOLDER, ota);
+    let data=await fsReadFileAsync(filePath, {encoding: 'utf-8'});
+    res.setHeader('Content-Length', data.length);
+    res.end(data);
 }
-const DEFAULT = 'getOTAHotelRes';
 
-module.exports = (req, res) => {
-    let body = [];
-
-    // WHen HTTP Data is received, we push it to the body
-    req.on('data', (chunk) => {
-        if (body.length === 0) {
-            res.setHeader('Content-Type', 'text/xml;charset=UTF-8');
-            res.status(200);
-        }
-        body.push(chunk);
-    });
-
-    // Once we have everything, we answer
-    req.on('end', (chunk) => {
-        // Extract the body
-        body = Buffer.concat(body).toString();
-        console.log(body);
-
-        // Determine which file to serve
-        const queryObject = url.parse(req.url, true).query;
-        let filePath;
-        if (queryObject.ota !== undefined) {
-            filePath = responses[queryObject.ota];
-        }
-        if (!filePath)
-            filePath = responses[DEFAULT];
-        // Send the answer
-        fs.readFile(filePath, {encoding: 'utf-8'}, function (err, data) {
-            res.setHeader('Content-Length', data.length);
-            res.end(data);
-        });
-    });
-
-};
+const getAvailableFiles = async () => {
+    let files = await fsReadDirAsync(RESPONSES_FOLDER);
+    return files;
+}
+const fileExists = async (fname) =>{
+    if (fname.indexOf('..') > -1) { //don't let the user go up from the current folder!
+        return false;
+    }
+    let filePath = path.join(RESPONSES_FOLDER, fname);
+    try{
+        await fsStatAsync(filePath);
+        return true;
+    }catch(err){
+        console.log(err);
+        return false;
+    }
+}

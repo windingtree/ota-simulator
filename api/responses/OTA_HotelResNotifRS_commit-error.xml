@@ -1,0 +1,9 @@
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" >
+    <SOAP-ENV:Body>
+        <OTA_HotelResNotifRS TimeStamp="2020-09-26T12:39:52Z" Version="2.000" xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05 OTA_HotelResNotifRQ.xsd">
+            <Errors>
+                <Error Type="320">|ID Empty</Error>
+            </Errors>
+        </OTA_HotelResNotifRS>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
